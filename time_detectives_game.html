@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIME DETECTIVES: WHAT WAS HAPPENING?</title>
+    <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM & BASE STYLES
+           ========================================================================== */
+        :root {
+            --pastel-blue: #E0F2FE;
+            --primary-blue: #0284C7;
+            --dark-blue: #0369A1;
+            --mint-green: #E6FFFA;
+            --primary-green: #0D9488;
+            --warm-yellow: #FEF08A;
+            --accent-yellow: #EAB308;
+            --soft-orange: #FFEDD5;
+            --primary-orange: #F97316;
+            --card-bg: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --border-light: #E2E8F0;
+            --correct-bg: #DCFCE7;
+            --correct-border: #22C55E;
+            --incorrect-bg: #FEE2E2;
+            --incorrect-border: #EF4444;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #F0F9FF;
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vertical-align: middle;
+        }
+
+        .icon-lg {
+            width: 36px;
+            height: 36px;
+        }
+
+        /* Header & Navbar */
+        header {
+            background: linear-gradient(135deg, #0284C7 0%, #0D9488 100%);
+            color: white;
+            padding: 20px 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-icon {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-text h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .brand-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: var(--radius-sm);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-yellow { background-color: var(--warm-yellow); color: #854D0E; }
+        .btn-yellow:hover { background-color: #FDE047; }
+        .btn-blue { background-color: var(--primary-blue); color: white; }
+        .btn-blue:hover { background-color: var(--dark-blue); }
+        .btn-orange { background-color: var(--primary-orange); color: white; }
+        .btn-orange:hover { background-color: #EA580C; }
+        .btn-green { background-color: var(--primary-green); color: white; }
+        .btn-green:hover { background-color: #0F766E; }
+        .btn-outline { background-color: white; color: var(--text-dark); border: 2px solid var(--border-light); }
+        .btn-outline:hover { background-color: #F8FAFC; }
+        .btn-danger { background-color: #EF4444; color: white; }
+        .btn-danger:hover { background-color: #DC2626; }
+        .btn-sm { padding: 6px 12px; font-size: 0.85rem; }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            background: white;
+            padding: 6px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            font-weight: 700;
+            color: var(--text-muted);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .nav-tab:hover {
+            background-color: var(--pastel-blue);
+            color: var(--primary-blue);
+        }
+
+        .nav-tab.active {
+            background-color: var(--primary-blue);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Main Layout Grid */
+        .app-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--pastel-blue);
+        }
+
+        /* Active Team Highlight */
+        .active-team-card {
+            background: linear-gradient(135deg, #FEF08A 0%, #FFEDD5 100%);
+            border: 2px solid var(--accent-yellow);
+        }
+
+        .active-team-select {
+            width: 100%;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--primary-blue);
+            font-weight: 600;
+            margin-top: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Leaderboard */
+        .leaderboard-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .team-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: #F8FAFC;
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .team-row.active-row {
+            background: var(--pastel-blue);
+            font-weight: bold;
+        }
+
+        .team-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .team-name {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .team-stats {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .badge-pill {
+            font-size: 0.75rem;
+            background: var(--soft-orange);
+            color: var(--primary-orange);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        /* Case File Box */
+        .case-brief {
+            background: #FFFBEB;
+            border: 2px dashed #F59E0B;
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .case-brief h3 {
+            color: #B45309;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .evidence-list {
+            list-style: none;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .evidence-item {
+            background: white;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--accent-yellow);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Interactive Question Cards */
+        .question-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            background: var(--pastel-blue);
+            color: var(--primary-blue);
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        @media (min-width: 600px) {
+            .options-grid.two-cols {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-btn {
+            background: #F8FAFC;
+            border: 2px solid var(--border-light);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: var(--pastel-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .option-btn.correct {
+            background: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #14532D !important;
+        }
+
+        .option-btn.incorrect {
+            background: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #7F1D1D !important;
+        }
+
+        .feedback-box {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .feedback-box.correct {
+            display: block;
+            background: var(--correct-bg);
+            color: #14532D;
+            border: 1px solid var(--correct-border);
+        }
+
+        .feedback-box.incorrect {
+            display: block;
+            background: var(--incorrect-bg);
+            color: #7F1D1D;
+            border: 1px solid var(--incorrect-border);
+        }
+
+        /* Scene / Action Graphic Cards */
+        .action-card-graphic {
+            background: linear-gradient(135deg, var(--mint-green) 0%, var(--pastel-blue) 100%);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 14px;
+            border: 2px solid var(--primary-green);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-time-tag {
+            background: var(--primary-blue);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        /* Text Submissions for Open Ended Questions */
+        .text-input-group {
+            margin-bottom: 16px;
+        }
+
+        .text-input-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--dark-blue);
+        }
+
+        .text-input-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .text-input-group input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        /* Teacher Review Items */
+        .submission-review-card {
+            background: white;
+            border-left: 4px solid var(--primary-orange);
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius-lg);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--pastel-blue);
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--dark-blue);
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            background: #E2E8F0;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 6px;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--primary-green), var(--primary-blue));
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        /* Badges Display */
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .badge-card {
+            background: #F8FAFC;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            text-align: center;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
+
+        .badge-card.unlocked {
+            opacity: 1;
+            background: #F0FDF4;
+            border-color: #22C55E;
+            transform: scale(1.02);
+        }
+
+        .badge-icon-svg {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 8px auto;
+        }
+
+        .badge-name {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HEADER / BRANDING BANNER -->
+        <header>
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="11" y1="8" x2="11" y2="14"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>TIME DETECTIVES</h1>
+                    <p>Grammar Investigation: What was happening?</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-yellow" id="btn-teacher-panel">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
+                    Teacher Controls
+                </button>
+            </div>
+        </header>
+
+        <!-- NAVIGATION TABS -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="brief">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                Case File
+            </button>
+            <button class="nav-tab" data-tab="challengeA">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                Challenge A: Actions
+            </button>
+            <button class="nav-tab" data-tab="challengeB">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"></path></svg>
+                Challenge B: Grammar
+            </button>
+            <button class="nav-tab" data-tab="challengeC">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Challenge C: Solve Case
+            </button>
+        </nav>
+
+        <!-- MAIN LAYOUT: SIDEBAR + CONTENT -->
+        <div class="app-grid">
+            <!-- SIDEBAR: TEAM STATUS & LEADERBOARD -->
+            <aside class="sidebar">
+                <!-- ACTIVE TEAM SELECTOR CARD -->
+                <div class="card active-team-card">
+                    <div class="card-title">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
+                        Active Detective Squad
+                    </div>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Select the team currently solving clues:</p>
+                    <select id="active-team-select" class="active-team-select">
+                        <!-- Populated by JS -->
+                    </select>
+                    
+                    <div style="margin-top:12px;">
+                        <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:700;">
+                            <span>Progress</span>
+                            <span id="active-team-progress-text">0/3 Challenges</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div id="active-team-progress-bar" class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEADERBOARD CARD -->
+                <div class="card">
+                    <div class="card-title">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 000-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0012 0V2z"></path></svg>
+                        Leaderboard
+                    </div>
+                    <ul class="leaderboard-list" id="leaderboard-list">
+                        <!-- Dynamic team rows inserted here -->
+                    </ul>
+                </div>
+
+                <!-- BADGES CARD -->
+                <div class="card">
+                    <div class="card-title">
+                        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 22 12 17 17 22 15.79 13.88"></polyline></svg>
+                        Squad Badges
+                    </div>
+                    <div class="badges-grid" id="badges-container">
+                        <!-- Badges rendered here -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- MAIN CONTENT DISPLAY AREA -->
+            <main class="main-content">
+
+                <!-- TAB 1: CASE BRIEFING -->
+                <section id="tab-brief" class="tab-content">
+                    <div class="card">
+                        <div class="case-brief">
+                            <h3>
+                                <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                CASE FILE #104: THE MISSING TROPHY
+                            </h3>
+                            <p style="font-size:1.05rem; margin-bottom:12px;">
+                                <strong>The school trophy disappeared at exactly 4:00 p.m.</strong> Several people were doing different activities around school at that exact moment. Detective teams must analyze the past continuous evidence to reconstruct what was happening!
+                            </p>
+                            <p style="font-size:0.9rem; color:#92400E; background:#FEF3C7; padding:8px 12px; border-radius:6px; font-weight:600;">
+                                ⚠️ RULE: Do not name a culprit without sufficient proof! Focus on verifying exact times and past actions.
+                            </p>
+                        </div>
+
+                        <div class="card-title" style="margin-top:20px;">
+                            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            Verified Timeline & Evidence
+                        </div>
+                        <ul class="evidence-list">
+                            <li class="evidence-item">
+                                <strong style="color:var(--dark-blue); min-width:80px;">3:50 p.m.</strong>
+                                <span>Anna was cleaning the classroom.</span>
+                            </li>
+                            <li class="evidence-item">
+                                <strong style="color:var(--dark-blue); min-width:80px;">3:55 p.m.</strong>
+                                <span>Mark was playing basketball outside.</span>
+                            </li>
+                            <li class="evidence-item">
+                                <strong style="color:var(--dark-blue); min-width:80px;">4:00 p.m.</strong>
+                                <span>The teacher was talking to another student.</span>
+                            </li>
+                            <li class="evidence-item">
+                                <strong style="color:var(--dark-blue); min-width:80px;">4:00 p.m.</strong>
+                                <span>Two students were walking near the school office.</span>
+                            </li>
+                        </ul>
+
+                        <div style="margin-top:24px; text-align:center;">
+                            <button class="btn btn-blue btn-lg" onclick="switchTab('challengeA')">
+                                Start Investigation (Challenge A) →
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: CHALLENGE A - IDENTIFY THE ACTION -->
+                <section id="tab-challengeA" class="tab-content hidden">
+                    <div class="card" style="margin-bottom:20px;">
+                        <h2 style="color:var(--dark-blue); margin-bottom:6px;">Challenge A: Identify the Action</h2>
+                        <p style="color:var(--text-muted);">Inspect the witness evidence cards. Choose the correct <strong>Past Continuous</strong> sentence describing each activity.</p>
+                    </div>
+
+                    <div id="challenge-A-questions">
+                        <!-- Question Cards Rendered via JS -->
+                    </div>
+                </section>
+
+                <!-- TAB 3: CHALLENGE B - GRAMMAR INVESTIGATION -->
+                <section id="tab-challengeB" class="tab-content hidden">
+                    <div class="card" style="margin-bottom:20px;">
+                        <h2 style="color:var(--dark-blue); margin-bottom:6px;">Challenge B: Grammar Investigation</h2>
+                        <p style="color:var(--text-muted);">Demonstrate command of Past Continuous structures (Affirmative, Negative, Questions, and Interrupted Actions with <em>when / while</em>).</p>
+                    </div>
+
+                    <div id="challenge-B-questions">
+                        <!-- Question Cards Rendered via JS -->
+                    </div>
+                </section>
+
+                <!-- TAB 4: CHALLENGE C - SOLVE THE CASE & CREATIVE WRITING -->
+                <section id="tab-challengeC" class="tab-content hidden">
+                    <div class="card" style="margin-bottom:20px;">
+                        <h2 style="color:var(--dark-blue); margin-bottom:6px;">Challenge C: Solve the Case & Sentence Report</h2>
+                        <p style="color:var(--text-muted);">Part 1: Answer evidence questions. Part 2: Formulate custom team sentences for teacher review.</p>
+                    </div>
+
+                    <!-- Part 1: Evidence Comprehension -->
+                    <div id="challenge-C-questions">
+                        <!-- Questions 1-4 Rendered via JS -->
+                    </div>
+
+                    <!-- Part 2: Open Sentence Creation -->
+                    <div class="card" style="border:2px solid var(--primary-orange);">
+                        <div class="card-title" style="color:var(--primary-orange);">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Final Case Report: Sentence Submission
+                        </div>
+                        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">
+                            Write your three final detective statements below. The teacher will review your grammar and award points!
+                        </p>
+
+                        <form id="sentence-submit-form" onsubmit="handleSentenceSubmit(event)">
+                            <div class="text-input-group">
+                                <label for="sent-aff">1. Affirmative Sentence (Subject + was/were + verb-ing):</label>
+                                <input type="text" id="sent-aff" placeholder="e.g. The student was writing notes in class." required>
+                            </div>
+
+                            <div class="text-input-group">
+                                <label for="sent-neg">2. Negative Sentence (Subject + wasn't/weren't + verb-ing):</label>
+                                <input type="text" id="sent-neg" placeholder="e.g. Anna wasn't running in the hallway." required>
+                            </div>
+
+                            <div class="text-input-group">
+                                <label for="sent-int">3. Interrupted Action (using WHEN or WHILE):</label>
+                                <input type="text" id="sent-int" placeholder="e.g. I was searching for clues when the bell rang." required>
+                            </div>
+
+                            <button type="submit" class="btn btn-orange">Submit Report for Teacher Review</button>
+                        </form>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- TEACHER CONTROLS MODAL -->
+    <div class="modal-overlay" id="teacher-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Teacher Control Panel</div>
+                <button class="btn btn-outline btn-sm" onclick="closeTeacherModal()">✕ Close</button>
+            </div>
+
+            <!-- Team Names Management -->
+            <div style="margin-bottom:20px;">
+                <h4 style="margin-bottom:8px; color:var(--dark-blue);">1. Edit Team Names</h4>
+                <div id="team-inputs-container" style="display:flex; flex-direction:column; gap:8px;">
+                    <!-- Team name inputs populated by JS -->
+                </div>
+                <button class="btn btn-blue btn-sm" style="margin-top:8px;" onclick="saveTeamNames()">Save Team Names</button>
+            </div>
+
+            <!-- Manual Score / Bonus Adjustments -->
+            <div style="margin-bottom:20px;">
+                <h4 style="margin-bottom:8px; color:var(--dark-blue);">2. Adjust XP / Bonus Points</h4>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <select id="adjust-team-select" style="padding:8px; border-radius:6px; flex:1;"></select>
+                    <input type="number" id="adjust-xp-amount" value="10" step="5" style="width:80px; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                    <button class="btn btn-green btn-sm" onclick="adjustXP(1)">+ Add XP</button>
+                    <button class="btn btn-danger btn-sm" onclick="adjustXP(-1)">- Deduct</button>
+                </div>
+            </div>
+
+            <!-- Pending Sentence Review -->
+            <div style="margin-bottom:20px;">
+                <h4 style="margin-bottom:8px; color:var(--dark-blue);">3. Pending Sentence Submissions</h4>
+                <div id="submissions-review-list">
+                    <p style="font-size:0.85rem; color:var(--text-muted);">No pending submissions.</p>
+                </div>
+            </div>
+
+            <!-- Data & Game Reset Controls -->
+            <div style="border-top:1px solid var(--border-light); padding-top:16px; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;">
+                <button class="btn btn-green" onclick="exportCSV()">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Export Results (CSV)
+                </button>
+                <button class="btn btn-danger" onclick="confirmResetGame()">
+                    Reset Game Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       JAVASCRIPT LOGIC & STATE MANAGEMENT
+       ========================================================================== -->
+    <script>
+        /* ----------------------------------------------------------------------
+           STATE & DATA STORAGE
+           ---------------------------------------------------------------------- */
+        const DEFAULT_TEAMS = [
+            { id: 'team1', name: 'Alpha Detectives', xp: 0, completed: {}, badges: [] },
+            { id: 'team2', name: 'Sherlock Squad', xp: 0, completed: {}, badges: [] },
+            { id: 'team3', name: 'Clue Chasers', xp: 0, completed: {}, badges: [] }
+        ];
+
+        let gameState = {
+            activeTeamId: 'team1',
+            teams: DEFAULT_TEAMS,
+            submissions: [] // Store open-ended submissions for teacher review
+        };
+
+        // Badge Definitions
+        const BADGES = {
+            action: { id: 'action', name: 'Action Detective', icon: '🔍', desc: 'Completed Challenge A' },
+            grammar: { id: 'grammar', name: 'Grammar Investigator', icon: '📑', desc: 'Completed Challenge B' },
+            master: { id: 'master', name: 'Master Time Detective', icon: '🏆', desc: 'Solved Challenge C & Case' }
+        };
+
+        /* ----------------------------------------------------------------------
+           QUESTIONS DATA
+           ---------------------------------------------------------------------- */
+        const challengeAData = [
+            {
+                id: 'qA1',
+                time: '3:50 p.m.',
+                subject: 'Anna',
+                graphicSvg: `<svg class="icon-lg" style="color:var(--primary-blue);" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"></path></svg>`,
+                question: 'What was Anna doing at 3:50 p.m.?',
+                options: [
+                    { text: 'Anna was cleaning the classroom.', correct: true },
+                    { text: 'Anna was playing basketball.', correct: false },
+                    { text: 'Anna were cleaning the classroom.', correct: false },
+                    { text: 'Anna cleaned the classroom at 3:50.', correct: false }
+                ],
+                explanation: 'Correct! "Anna was cleaning" uses was + verb-ing for singular past activity.'
+            },
+            {
+                id: 'qA2',
+                time: '3:55 p.m.',
+                subject: 'Mark',
+                graphicSvg: `<svg class="icon-lg" style="color:var(--primary-orange);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 000 20M2 12h20"></path></svg>`,
+                question: 'What was Mark doing at 3:55 p.m.?',
+                options: [
+                    { text: 'Mark were playing basketball.', correct: false },
+                    { text: 'Mark was playing basketball.', correct: true },
+                    { text: 'Mark was play basketball.', correct: false },
+                    { text: 'Mark plays basketball.', correct: false }
+                ],
+                explanation: 'Correct! Singular subject "Mark" requires "was playing".'
+            },
+            {
+                id: 'qA3',
+                time: '4:00 p.m.',
+                subject: 'Two Students',
+                graphicSvg: `<svg class="icon-lg" style="color:var(--primary-green);" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>`,
+                question: 'What were the two students doing at 4:00 p.m.?',
+                options: [
+                    { text: 'Two students was walking near the office.', correct: false },
+                    { text: 'Two students walked near the office.', correct: false },
+                    { text: 'Two students were walking near the office.', correct: true },
+                    { text: 'Two students were walk near the office.', correct: false }
+                ],
+                explanation: 'Correct! Plural subject "Two students" requires "were walking".'
+            }
+        ];
+
+        const challengeBData = [
+            {
+                id: 'qB1',
+                question: 'Complete the affirmative sentence: "She ___ studying in the library at 8 p.m."',
+                options: [
+                    { text: 'was', correct: true },
+                    { text: 'were', correct: false },
+                    { text: 'is', correct: false }
+                ],
+                explanation: 'Use "was" for third-person singular subjects (he, she, it).'
+            },
+            {
+                id: 'qB2',
+                question: 'Complete the plural sentence: "They ___ playing soccer when it started raining."',
+                options: [
+                    { text: 'was', correct: false },
+                    { text: 'were', correct: true },
+                    { text: 'are', correct: false }
+                ],
+                explanation: 'Use "were" for plural subjects (they, we, you).'
+            },
+            {
+                id: 'qB3',
+                question: 'Select the correct NEGATIVE Past Continuous sentence:',
+                options: [
+                    { text: 'He not was sleeping.', correct: false },
+                    { text: 'He wasn\'t sleeping during class.', correct: true },
+                    { text: 'He don\'t sleeping.', correct: false }
+                ],
+                explanation: '"wasn\'t" (was not) + verb-ing forms the negative singular past continuous.'
+            },
+            {
+                id: 'qB4',
+                question: 'Which sentence correctly shows an INTERRUPTED action?',
+                options: [
+                    { text: 'I was doing homework when my friend called.', correct: true },
+                    { text: 'I did homework while my friend was calling.', correct: false },
+                    { text: 'I was doing homework while my friend called.', correct: false }
+                ],
+                explanation: 'Use "was doing" (ongoing continuous action) + WHEN + simple past event ("friend called").'
+            }
+        ];
+
+        const challengeCData = [
+            {
+                id: 'qC1',
+                question: '1. What was Anna doing at 3:50 p.m.?',
+                options: [
+                    { text: 'She was cleaning the classroom.', correct: true },
+                    { text: 'She was leaving the school office.', correct: false }
+                ],
+                explanation: 'Verified by timeline evidence.'
+            },
+            {
+                id: 'qC2',
+                question: '2. What was Mark doing at 3:55 p.m.?',
+                options: [
+                    { text: 'He was talking to the teacher.', correct: false },
+                    { text: 'He was playing basketball.', correct: true }
+                ],
+                explanation: 'Verified by timeline evidence.'
+            },
+            {
+                id: 'qC3',
+                question: '3. Who was the teacher talking to at 4:00 p.m.?',
+                options: [
+                    { text: 'The teacher was talking to another student.', correct: true },
+                    { text: 'The teacher was talking to Anna.', correct: false }
+                ],
+                explanation: 'Evidence states the teacher was talking to another student.'
+            },
+            {
+                id: 'qC4',
+                question: '4. Where were the two students walking at 4:00 p.m.?',
+                options: [
+                    { text: 'They were walking near the school office.', correct: true },
+                    { text: 'They were walking towards the gym.', correct: false }
+                ],
+                explanation: 'Evidence places them near the school office.'
+            }
+        ];
+
+        /* ----------------------------------------------------------------------
+           INITIALIZATION & LOCAL STORAGE
+           ---------------------------------------------------------------------- */
+        window.addEventListener('DOMContentLoaded', () => {
+            loadGameState();
+            initTabs();
+            renderActiveTeamSelector();
+            renderLeaderboard();
+            renderBadges();
+            renderChallengeA();
+            renderChallengeB();
+            renderChallengeC();
+            setupEventListeners();
+        });
+
+        function saveGameState() {
+            localStorage.setItem('time_detectives_state', JSON.stringify(gameState));
+            renderLeaderboard();
+            renderBadges();
+            updateTeamProgressUI();
+        }
+
+        function loadGameState() {
+            const saved = localStorage.getItem('time_detectives_state');
+            if (saved) {
+                try {
+                    gameState = JSON.parse(saved);
+                } catch(e) {
+                    console.error("Failed to parse saved state", e);
+                }
+            }
+        }
+
+        /* ----------------------------------------------------------------------
+           UI & TAB SWITCHING
+           ---------------------------------------------------------------------- */
+        function initTabs() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+                    switchTab(target);
+                });
+            });
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.nav-tab').forEach(t => {
+                t.classList.toggle('active', t.getAttribute('data-tab') === tabId);
+            });
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.classList.add('hidden');
+            });
+            const selected = document.getElementById(`tab-${tabId}`);
+            if (selected) selected.classList.remove('hidden');
+        }
+
+        /* ----------------------------------------------------------------------
+           TEAM MANAGEMENT & LEADERBOARD
+           ---------------------------------------------------------------------- */
+        function renderActiveTeamSelector() {
+            const select = document.getElementById('active-team-select');
+            select.innerHTML = '';
+            gameState.teams.forEach(team => {
+                const opt = document.createElement('option');
+                opt.value = team.id;
+                opt.textContent = team.name;
+                if (team.id === gameState.activeTeamId) opt.selected = true;
+                select.appendChild(opt);
+            });
+        }
+
+        function getActiveTeam() {
+            return gameState.teams.find(t => t.id === gameState.activeTeamId) || gameState.teams[0];
+        }
+
+        function renderLeaderboard() {
+            const list = document.getElementById('leaderboard-list');
+            list.innerHTML = '';
+
+            // Sort teams descending by XP
+            const sorted = [...gameState.teams].sort((a, b) => b.xp - a.xp);
+
+            sorted.forEach(team => {
+                const li = document.createElement('li');
+                li.className = `team-row ${team.id === gameState.activeTeamId ? 'active-row' : ''}`;
+                
+                const badgeCount = (team.badges || []).length;
+
+                li.innerHTML = `
+                    <div class="team-info">
+                        <span class="team-name">${escapeHtml(team.name)}</span>
+                        <span class="team-stats">${badgeCount} Badge(s) Earned</span>
+                    </div>
+                    <div style="text-align:right;">
+                        <span style="font-weight:800; color:var(--primary-blue); font-size:1.1rem;">${team.xp} XP</span>
+                    </div>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function updateTeamProgressUI() {
+            const team = getActiveTeam();
+            const totalItems = challengeAData.length + challengeBData.length + challengeCData.length;
+            const completedCount = Object.keys(team.completed || {}).length;
+            const percentage = Math.min(100, Math.round((completedCount / totalItems) * 100));
+
+            document.getElementById('active-team-progress-bar').style.width = `${percentage}%`;
+            document.getElementById('active-team-progress-text').textContent = `${percentage}% Solved`;
+
+            // Check badge rewards
+            checkBadgeUnlock(team);
+        }
+
+        function renderBadges() {
+            const container = document.getElementById('badges-container');
+            container.innerHTML = '';
+
+            const team = getActiveTeam();
+            const teamBadges = team.badges || [];
+
+            Object.values(BADGES).forEach(badge => {
+                const isUnlocked = teamBadges.includes(badge.id);
+                const div = document.createElement('div');
+                div.className = `badge-card ${isUnlocked ? 'unlocked' : ''}`;
+                div.innerHTML = `
+                    <div style="font-size:2rem; margin-bottom:4px;">${badge.icon}</div>
+                    <div class="badge-name">${badge.name}</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">${badge.desc}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function checkBadgeUnlock(team) {
+            let updated = false;
+            if (!team.badges) team.badges = [];
+
+            // Challenge A complete
+            const chalAComplete = challengeAData.every(q => team.completed[q.id]);
+            if (chalAComplete && !team.badges.includes('action')) {
+                team.badges.push('action');
+                updated = true;
+            }
+
+            // Challenge B complete
+            const chalBComplete = challengeBData.every(q => team.completed[q.id]);
+            if (chalBComplete && !team.badges.includes('grammar')) {
+                team.badges.push('grammar');
+                updated = true;
+            }
+
+            // Challenge C complete
+            const chalCComplete = challengeCData.every(q => team.completed[q.id]);
+            if (chalCComplete && !team.badges.includes('master')) {
+                team.badges.push('master');
+                updated = true;
+            }
+
+            if (updated) {
+                saveGameState();
+            }
+        }
+
+        /* ----------------------------------------------------------------------
+           RENDER CHALLENGES
+           ---------------------------------------------------------------------- */
+        function renderQuestionSet(containerId, questions) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            const activeTeam = getActiveTeam();
+
+            questions.forEach((q, idx) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `card-${q.id}`;
+
+                const isAnswered = activeTeam.completed[q.id];
+
+                let graphicHtml = '';
+                if (q.graphicSvg) {
+                    graphicHtml = `
+                        <div class="action-card-graphic">
+                            <span class="action-time-tag">${q.time}</span>
+                            ${q.graphicSvg}
+                            <strong style="color:var(--dark-blue);">${q.subject}</strong>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="question-header">
+                        <span class="question-number">Question ${idx + 1}</span>
+                        ${isAnswered ? '<span class="badge-pill" style="background:#DCFCE7; color:#15803D;">✓ Solved (+10 XP)</span>' : ''}
+                    </div>
+                    ${graphicHtml}
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-grid" id="options-${q.id}">
+                        ${q.options.map((opt, oIdx) => `
+                            <button class="option-btn" 
+                                    onclick="handleAnswerClick('${q.id}', ${oIdx}, ${opt.correct})"
+                                    ${isAnswered ? 'disabled' : ''}>
+                                ${escapeHtml(opt.text)}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div class="feedback-box" id="feedback-${q.id}"></div>
+                `;
+
+                container.appendChild(card);
+
+                // If already answered previously, display state
+                if (isAnswered) {
+                    const fb = card.querySelector(`#feedback-${q.id}`);
+                    fb.className = 'feedback-box correct';
+                    fb.textContent = q.explanation;
+                }
+            });
+        }
+
+        function renderChallengeA() { renderQuestionSet('challenge-A-questions', challengeAData); }
+        function renderChallengeB() { renderQuestionSet('challenge-B-questions', challengeBData); }
+        function renderChallengeC() { renderQuestionSet('challenge-C-questions', challengeCData); }
+
+        /* ----------------------------------------------------------------------
+           ANSWER INTERACTION HANDLER
+           ---------------------------------------------------------------------- */
+        function handleAnswerClick(qId, optionIdx, isCorrect) {
+            const activeTeam = getActiveTeam();
+            if (activeTeam.completed[qId]) return; // Already solved
+
+            const optionsContainer = document.getElementById(`options-${qId}`);
+            const buttons = optionsContainer.querySelectorAll('.option-btn');
+            const feedbackBox = document.getElementById(`feedback-${qId}`);
+
+            // Find question data for feedback explanation
+            const allQ = [...challengeAData, ...challengeBData, ...challengeCData];
+            const qData = allQ.find(q => q.id === qId);
+
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === optionIdx) {
+                    btn.classList.add(isCorrect ? 'correct' : 'incorrect');
+                }
+            });
+
+            if (isCorrect) {
+                feedbackBox.className = 'feedback-box correct';
+                feedbackBox.textContent = '🎉 Correct! ' + (qData ? qData.explanation : '');
+                
+                // Award XP
+                activeTeam.xp += 10;
+                activeTeam.completed[qId] = true;
+                saveGameState();
+            } else {
+                feedbackBox.className = 'feedback-box incorrect';
+                feedbackBox.textContent = '❌ Try again! Review the clue timeline or grammar rules.';
+                
+                // Re-enable options after short delay for retry
+                setTimeout(() => {
+                    buttons.forEach(btn => {
+                        btn.disabled = false;
+                        btn.classList.remove('incorrect');
+                    });
+                    feedbackBox.style.display = 'none';
+                }, 1800);
+            }
+        }
+
+        /* ----------------------------------------------------------------------
+           SENTENCE REPORT FORM & TEACHER REVIEW
+           ---------------------------------------------------------------------- */
+        function handleSentenceSubmit(e) {
+            e.preventDefault();
+            const activeTeam = getActiveTeam();
+
+            const aff = document.getElementById('sent-aff').value.trim();
+            const neg = document.getElementById('sent-neg').value.trim();
+            const int = document.getElementById('sent-int').value.trim();
+
+            if (!aff || !neg || !int) return;
+
+            const submission = {
+                id: 'sub_' + Date.now(),
+                teamId: activeTeam.id,
+                teamName: activeTeam.name,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                aff, neg, int,
+                status: 'pending'
+            };
+
+            gameState.submissions.push(submission);
+            saveGameState();
+
+            document.getElementById('sentence-submit-form').reset();
+            alert('Report submitted successfully! Your teacher will review your sentences for bonus XP.');
+        }
+
+        /* ----------------------------------------------------------------------
+           TEACHER PANEL MODAL & FUNCTIONS
+           ---------------------------------------------------------------------- */
+        function setupEventListeners() {
+            document.getElementById('active-team-select').addEventListener('change', (e) => {
+                gameState.activeTeamId = e.target.value;
+                saveGameState();
+                renderChallengeA();
+                renderChallengeB();
+                renderChallengeC();
+            });
+
+            document.getElementById('btn-teacher-panel').addEventListener('click', openTeacherModal);
+        }
+
+        function openTeacherModal() {
+            renderTeacherModalContent();
+            document.getElementById('teacher-modal').classList.add('active');
+        }
+
+        function closeTeacherModal() {
+            document.getElementById('teacher-modal').classList.remove('active');
+        }
+
+        function renderTeacherModalContent() {
+            // Team Name Inputs
+            const teamInputsContainer = document.getElementById('team-inputs-container');
+            teamInputsContainer.innerHTML = '';
+            gameState.teams.forEach((t, i) => {
+                const div = document.createElement('div');
+                div.style.display = 'flex';
+                div.style.gap = '8px';
+                div.innerHTML = `
+                    <span style="line-height:36px; font-weight:bold; width:60px;">Team ${i+1}:</span>
+                    <input type="text" id="input-team-name-${t.id}" value="${escapeHtml(t.name)}" style="flex:1; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                `;
+                teamInputsContainer.appendChild(div);
+            });
+
+            // Adjust XP Team Select
+            const adjustSelect = document.getElementById('adjust-team-select');
+            adjustSelect.innerHTML = '';
+            gameState.teams.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t.id;
+                opt.textContent = t.name;
+                adjustSelect.appendChild(opt);
+            });
+
+            // Submissions List
+            const subList = document.getElementById('submissions-review-list');
+            subList.innerHTML = '';
+            if (!gameState.submissions || gameState.submissions.length === 0) {
+                subList.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">No pending submissions.</p>';
+            } else {
+                gameState.submissions.forEach((sub, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'submission-review-card';
+                    card.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                            <strong>${escapeHtml(sub.teamName)}</strong>
+                            <span style="font-size:0.75rem; color:var(--text-muted);">${sub.timestamp}</span>
+                        </div>
+                        <div style="font-size:0.85rem; margin-bottom:4px;"><strong>Affirmative:</strong> ${escapeHtml(sub.aff)}</div>
+                        <div style="font-size:0.85rem; margin-bottom:4px;"><strong>Negative:</strong> ${escapeHtml(sub.neg)}</div>
+                        <div style="font-size:0.85rem; margin-bottom:8px;"><strong>Interrupted:</strong> ${escapeHtml(sub.int)}</div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn btn-green btn-sm" onclick="approveSubmission(${index}, 15)">Approve (+15 XP)</button>
+                            <button class="btn btn-danger btn-sm" onclick="rejectSubmission(${index})">Reject</button>
+                        </div>
+                    `;
+                    subList.appendChild(card);
+                });
+            }
+        }
+
+        function saveTeamNames() {
+            gameState.teams.forEach(t => {
+                const input = document.getElementById(`input-team-name-${t.id}`);
+                if (input && input.value.trim() !== '') {
+                    t.name = input.value.trim();
+                }
+            });
+            saveGameState();
+            renderActiveTeamSelector();
+            renderTeacherModalContent();
+            alert('Team names updated successfully!');
+        }
+
+        function adjustXP(multiplier) {
+            const teamId = document.getElementById('adjust-team-select').value;
+            const amount = parseInt(document.getElementById('adjust-xp-amount').value, 10) || 0;
+            const team = gameState.teams.find(t => t.id === teamId);
+            if (team) {
+                team.xp = Math.max(0, team.xp + (amount * multiplier));
+                saveGameState();
+                renderTeacherModalContent();
+            }
+        }
+
+        function approveSubmission(index, bonusXP) {
+            const sub = gameState.submissions[index];
+            const team = gameState.teams.find(t => t.id === sub.teamId);
+            if (team) {
+                team.xp += bonusXP;
+            }
+            gameState.submissions.splice(index, 1);
+            saveGameState();
+            renderTeacherModalContent();
+        }
+
+        function rejectSubmission(index) {
+            gameState.submissions.splice(index, 1);
+            saveGameState();
+            renderTeacherModalContent();
+        }
+
+        function confirmResetGame() {
+            if (confirm("Are you sure you want to reset all game data? This will clear team XP and progress.")) {
+                localStorage.removeItem('time_detectives_state');
+                gameState = {
+                    activeTeamId: 'team1',
+                    teams: JSON.parse(JSON.stringify(DEFAULT_TEAMS)),
+                    submissions: []
+                };
+                saveGameState();
+                renderActiveTeamSelector();
+                renderChallengeA();
+                renderChallengeB();
+                renderChallengeC();
+                closeTeacherModal();
+            }
+        }
+
+        function exportCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Team ID,Team Name,XP Score,Badges Earned,Questions Solved\n";
+
+            gameState.teams.forEach(t => {
+                const badges = (t.badges || []).join(';');
+                const solved = Object.keys(t.completed || {}).length;
+                csvContent += `"${t.id}","${t.name}",${t.xp},"${badges}",${solved}\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "time_detectives_results.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        /* ----------------------------------------------------------------------
+           UTILITY FUNCTIONS
+           ---------------------------------------------------------------------- */
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, "&amp;")
+                      .replace(/</g, "&lt;")
+                      .replace(/>/g, "&gt;")
+                      .replace(/"/g, "&quot;")
+                      .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
